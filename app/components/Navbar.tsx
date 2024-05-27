@@ -4,6 +4,7 @@ import { ShoppingBagIcon, MenuIcon, X, SearchIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MyThemeContext from "../components/myThemeContext";
+import ShoppingCartModal from "./ShoppingCartModal";
 
 const links = [
   { name: "Home", href: "/" },
@@ -16,7 +17,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const themeCtx = useContext(MyThemeContext);
-
+  const [isCartMenuOpen, setIsCartMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -45,7 +46,10 @@ export default function Navbar() {
             </div>
           </div>
           <div className="flex items-center">
-            <button className="h-10 w-10 flex flex-col items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+            <button
+              className="h-10 w-10 flex flex-col items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              onClick={() => setIsCartMenuOpen(!isCartMenuOpen)} // Add onClick handler
+            >
               <ShoppingBagIcon />
               <span className="text-xs font-semibold">Cart</span>
             </button>
@@ -70,9 +74,8 @@ export default function Navbar() {
 
       {/* Mobile and Medium menu */}
       <nav
-        className={`mobile-menu fixed top-0 right-0 w-64 sm:w-72 h-screen z-50 bg-white shadow-lg overflow-auto transition duration-300 ease-in-out transform ${
-          isMenuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`mobile-menu fixed top-0 right-0 w-64 sm:w-72 h-screen z-50 bg-white shadow-lg overflow-auto transition duration-300 ease-in-out transform ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex items-center justify-end pt-6 pb-8 px-4">
           <button
@@ -87,11 +90,10 @@ export default function Navbar() {
             <li key={idx}>
               <Link
                 href={link.href}
-                className={`text-lg font-semibold hover:text-gray-400 block text-black transition duration-100 px-4 py-2 ${
-                  pathname === link.href
-                    ? "bg-gray-200 rounded-md"
-                    : "bg-transparent"
-                }`}
+                className={`text-lg font-semibold hover:text-gray-400 block text-black transition duration-100 px-4 py-2 ${pathname === link.href
+                  ? "bg-gray-200 rounded-md"
+                  : "bg-transparent"
+                  }`}
               >
                 {link.name}
               </Link>
@@ -107,11 +109,10 @@ export default function Navbar() {
             <li key={idx}>
               <Link
                 href={link.href}
-                className={`text-lg font-semibold hover:text-gray-400 transition duration-100 px-4 py-2 ${
-                  pathname === link.href
-                    ? "bg-gray-500 rounded-md"
-                    : "bg-transparent"
-                }`}
+                className={`text-lg font-semibold hover:text-gray-400 transition duration-100 px-4 py-2 ${pathname === link.href
+                  ? "bg-gray-500 rounded-md"
+                  : "bg-transparent"
+                  }`}
               >
                 {link.name}
               </Link>
@@ -119,6 +120,14 @@ export default function Navbar() {
           ))}
         </ul>
       </nav>
+      {isCartMenuOpen && (
+        <div
+          className="modal-wrapper fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 z-50"
+          onClick={() => setIsCartMenuOpen(false)}
+        >
+          <ShoppingCartModal />
+        </div>
+      )}
     </header>
   );
 }

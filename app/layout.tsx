@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import  Footer  from "../app/components/Footer";
 import { MyThemeContextProvider } from "./components/myThemeContext";
+import CartProvider from "./components/Providers";
+import ShoppingCartModal from "./components/ShoppingCartModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +23,11 @@ export default function RootLayout({
     <MyThemeContextProvider>
     <html lang="en">
       <body className={inter.className}>
+        <CartProvider>
         <Navbar />
         {children}
         <Footer />
+        </CartProvider>
       </body>
     </html>
     </MyThemeContextProvider>
