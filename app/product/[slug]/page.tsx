@@ -3,6 +3,7 @@ import { client } from "../../pages/api/sanity";
 import { fullProduct } from "../../interface";
 import ImageGallery from "../../components/ImageGallery";
 import { Truck } from "lucide-react";
+import AddToBag from "../../components/AddToBag";
 
 async function getData(slug: string) {
     const query = `*[_type == "product" && slug.current == "${slug}"][0]{
@@ -21,7 +22,7 @@ async function getData(slug: string) {
 
 }
 
-export default async function ProductPage({ params, }: { params: { slug: string }; }) {
+export default async function ProductPage({ params }: { params: { slug: string }; }) {
     const data: fullProduct = await getData(params.slug)
     return (
         <div className="bg-white">
@@ -51,9 +52,7 @@ export default async function ProductPage({ params, }: { params: { slug: string 
                                 </span>
                             </div>
                             <div className="flex gap-2.5">
-                                <button className="px-12 py-4 rounded-full bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200">
-                                    Add To Cart
-                                </button>
+                                <AddToBag currency="INR" description={data.description} image={data.images[0]} name={data.name} price={data.price} key={data._id} />
                                 <button className="px-12 py-4 rounded-full bg-[#1ED760] font-bold text-white tracking-widest uppercase transform hover:scale-105 hover:bg-[#21e065] transition-colors duration-200">
                                     CheckOut Now
                                 </button>

@@ -16,3 +16,7 @@ export interface fullProduct{
     name: string;
     description: string;
 }
+
+export interface Window {
+    Razorpay: any;
+  }

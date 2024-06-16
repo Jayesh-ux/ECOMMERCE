@@ -79,17 +79,17 @@ export const Menu = ({
 
 export const ProductItem = ({
   title,
-  description,
-  href,
+  price,
   src,
+  quantity,
 }: {
   title: string;
-  description: string;
-  href: string;
+  price: number;
   src: string;
+  quantity: number;
 }) => {
   return (
-    <Link href={href} className="flex space-x-2">
+    <div className="flex space-x-2">
       <Image
         src={src}
         width={140}
@@ -102,10 +102,14 @@ export const ProductItem = ({
           {title}
         </h4>
         <p className="text-neutral-700 text-sm max-w-[10rem] dark:text-neutral-300">
-          {description}
+          $ {price}
         </p>
+        <p className="text-neutral-700 text-md max-w-[20rem] dark:text-neutral-300">
+         QTY: {quantity}
+        </p>
+        
       </div>
-    </Link>
+    </div>
   );
 };
 
